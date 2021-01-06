@@ -1,9 +1,15 @@
+#ifdef _WIN32
 #include <direct.h>
+#endif
 #include <fstream>
 #include <map>
 #include <sstream>
 #include <vector>
+#ifdef _WIN32
 #include <zlib.h>
+#else
+#include <unistd.h>
+#endif
 
 #include "cpp_quakedef.hpp"
 #include "data_export.hpp"
@@ -213,6 +219,11 @@ void TestCase::Clear()
 	frame_count = 0;
 	deltas.clear();
 }
+
+
+#ifndef _WIN32 
+#define _getcwd getcwd
+#endif
 
 void TestCase::SaveToFile()
 {

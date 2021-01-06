@@ -2,7 +2,9 @@
 #include <cmath>
 #include <cstdint>
 #include <string>
+#ifdef _WIN32
 #include <filesystem>
+#endif
 #include <random>
 
 #include "cpp_quakedef.hpp"
@@ -332,6 +334,8 @@ void ReadString(std::ifstream & in, char* value)
 
 bool Create_Folder_If_Not_Exists(const char* file_name)
 {
+//TODO: Implement this on Linux.
+#ifdef _WIN32
 	std::filesystem::path path = file_name;
 
 	if (!path.has_parent_path())
@@ -345,12 +349,12 @@ bool Create_Folder_If_Not_Exists(const char* file_name)
 	{
 		std::filesystem::create_directory(parent);
 	}
-
+#endif
 
 	return true;
 }
 
-bool Open_Stream(std::ofstream & os, const char * file_name, int mode)
+bool Open_Stream(std::ofstream & os, const char * file_name, std::ios_base::openmode mode)
 {
 	if(!Create_Folder_If_Not_Exists(file_name))
 		return false;
@@ -360,12 +364,14 @@ bool Open_Stream(std::ofstream & os, const char * file_name, int mode)
 	return os.good();
 }
 
-bool Open_Stream(std::ifstream & in, const char * file_name, unsigned int mode)
+bool Open_Stream(std::ifstream & in, const char * file_name, std::ios_base::openmode mode)
 {
+#ifdef _WIN32
 	std::filesystem::path path = file_name;
 
 	if(!std::filesystem::exists(path) || std::filesystem::is_directory(path))
 		return false;
+#endif
 
 	in.open(file_name, mode);
 

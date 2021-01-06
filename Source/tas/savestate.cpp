@@ -269,14 +269,14 @@ static qboolean _ED_ParseEpair(void* base, ddef_t* key, char* s)
 
 /*
 ====================
-ED_ParseEdict
+_ED_ParseEdict
 
 Parses an edict out of the given string, returning the new position
 ed should be a properly initialized empty edict.
 Used for initial level load and for savegames.
 ====================
 */
-static char* ED_ParseEdict(char* data, edict_t* ent)
+static char* _ED_ParseEdict(char* data, edict_t* ent)
 {
 	ddef_t* key;
 	qboolean	anglehack;
@@ -353,7 +353,7 @@ static char* ED_ParseEdict(char* data, edict_t* ent)
 		}
 
 		if (!_ED_ParseEpair((void*)&ent->v, key, com_token))
-			Host_Error("ED_ParseEdict: parse error");
+			Host_Error("_ED_ParseEdict: parse error");
 	}
 
 	if (!init)
@@ -503,7 +503,7 @@ static void ReadEnts(std::ifstream& in, char* str)
 		memset(&ent->v, 0, progs->entityfields * 4);
 
 		GrabEntity(in, str);
-		ED_ParseEdict(str, ent);
+		_ED_ParseEdict(str, ent);
 		ent->free = qfalse;
 
 		SV_LinkEdict(ent, qfalse);
@@ -621,7 +621,7 @@ static ddef_t* ED_FindGlobal(char* name)
 	return NULL;
 }
 
-static void ED_ParseGlobals(char* data)
+static void _ED_ParseGlobals(char* data)
 {
 	char	keyname[64];
 	ddef_t* key;
@@ -651,15 +651,15 @@ static void ED_ParseGlobals(char* data)
 		}
 
 		if (!_ED_ParseEpair((void*)pr_globals, key, com_token))
-			Host_Error("ED_ParseGlobals: parse error");
+			Host_Error("_ED_ParseGlobals: parse error");
 	}
 }
 
 
 void Copy_Entity(int index)
 {
-#define COPY(prop) cl_entities[index].##prop = saved_ents[index].##prop
-#define VECCOPY(prop) VectorCopy(saved_ents[index].##prop, cl_entities[index].##prop)
+#define COPY(prop) cl_entities[index].prop = saved_ents[index].prop
+#define VECCOPY(prop) VectorCopy(saved_ents[index].prop, cl_entities[index].prop)
 	VECCOPY(angles);
 	VECCOPY(angles1);
 	VECCOPY(angles2);
@@ -723,8 +723,8 @@ void Restore_Client()
 		}
 	}
 
-#define COPY2(prop) cl.##prop = cl_backup.##prop
-#define VECCOPY2(prop) VectorCopy(cl_backup.##prop, cl.##prop)
+#define COPY2(prop) cl.prop = cl_backup.prop
+#define VECCOPY2(prop) VectorCopy(cl_backup.prop, cl.prop)
 
 	COPY2(cdtrack);
 	COPY2(cmd);
@@ -892,7 +892,7 @@ void Cmd_TAS_LS(void)
 	}
 
 	GrabEntity(in, str);
-	ED_ParseGlobals(str);
+	_ED_ParseGlobals(str);
 	ReadEnts(in, str);
 
 	for (i = 0; i < NUM_SPAWN_PARMS; i++)

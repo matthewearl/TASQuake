@@ -114,12 +114,12 @@ void Cmd_TAS_IPC_Condition()
 	float y2 = std::atof(Cmd_Argv(6));
 	float z2 = std::atof(Cmd_Argv(7));
 
-	ipc_condition.mins[0] = min(x1, x2);
-	ipc_condition.mins[1] = min(y1, y2);
-	ipc_condition.mins[2] = min(z1, z2);
-	ipc_condition.maxs[0] = max(x1, x2);
-	ipc_condition.maxs[1] = max(y1, y2);
-	ipc_condition.maxs[2] = max(z1, z2);
+	ipc_condition.mins[0] = TAS_MIN(x1, x2);
+	ipc_condition.mins[1] = TAS_MIN(y1, y2);
+	ipc_condition.mins[2] = TAS_MIN(z1, z2);
+	ipc_condition.maxs[0] = TAS_MAX(x1, x2);
+	ipc_condition.maxs[1] = TAS_MAX(y1, y2);
+	ipc_condition.maxs[2] = TAS_MAX(z1, z2);
 }
 
 

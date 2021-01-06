@@ -459,7 +459,7 @@ void Cmd_TAS_Script_Init(void)
 	b1.frame = 1;
 	b1.Add_Command("disconnect");
 	b1.Add_Command("tas_set_seed");
-	sprintf_s(BUFFER, "tas_strafe_version %s", tas_strafe_version.defaultvalue);
+	sprintf_s(BUFFER, sizeof(BUFFER), "tas_strafe_version %s", tas_strafe_version.defaultvalue);
 	b1.Add_Command(BUFFER);
 
 	FrameBlock b2;

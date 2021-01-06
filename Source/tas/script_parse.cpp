@@ -1,5 +1,7 @@
 #include <algorithm>
+#ifdef _WIN32
 #include <filesystem>
+#endif
 #include <fstream>
 #include <map>
 #include <regex>
@@ -267,8 +269,11 @@ static bool Move_Saves(const char* file_name)
 		return false;
 	}
 
+//TODO: Implement linux version
+#ifdef _WIN32
 	if (std::filesystem::exists(new_filename))
 		std::remove(new_filename);
+#endif
 
 	for (int i = backups - 2; i >= 0; --i)
 	{
@@ -278,8 +283,11 @@ static bool Move_Saves(const char* file_name)
 			Con_Printf("Failed to move save %d for file %s\n", file_name);
 			return false;
 		}
+//TODO: Implement linux version
+#ifdef _WIN32
 		if (std::filesystem::exists(old_filename))
 			std::rename(old_filename, new_filename);
+#endif
 		std::strcpy(new_filename, old_filename);
 	}
 
@@ -496,17 +504,17 @@ TestBlock::TestBlock(const std::string& line)
 			if (filter[i] == '1')
 				this->afterframes_filter |= 1 << (4 - i);
 			else if (filter[i] != '0')
-				throw std::exception("Invalid bit in filter.");
+				throw std::runtime_error("Invalid bit in filter.");
 		}
 
 		if (this->hook_count < 0)
-			throw std::exception("Hook count cannot be negative.");
+			throw std::runtime_error("Hook count cannot be negative.");
 
 		command = sm[4];
 	}
 	else
 	{
-		throw std::exception("Unable to read all required variables from line.");
+		throw std::runtime_error("Unable to read all required variables from line.");
 	}
 }
 

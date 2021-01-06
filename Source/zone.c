@@ -94,6 +94,12 @@ void *Q_realloc (void *ptr, size_t size)
 	return p;
 }
 
+
+#ifndef _WIN32
+#define _strdup	 strdup
+#endif
+
+
 /*
 ===================
 Q_strdup
