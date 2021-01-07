@@ -434,6 +434,10 @@ void Mod_LoadTextures (lump_t *l)
 	dmiptexlump_t *m;
 	byte		*data;
 
+    if (isLibrary) {
+        return;
+    }
+
 	if (!l->filelen)
 	{
 		loadmodel->textures = NULL;

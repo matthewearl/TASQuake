@@ -288,6 +288,7 @@ extern int	current_skill;		// skill level for currently loaded level (in case
 					// the user changes the cvar while the level is
 					// running, this reflects the level actually in use)
 
+extern qboolean	isLibrary;
 extern qboolean isDedicated;
 extern	int	minimum_memory;
 extern	char	*argv0;

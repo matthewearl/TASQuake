@@ -10,19 +10,22 @@ CC 		:= gcc
 
 default_target: glx
 
-all: glx
+all: glx lib
 
 ################################
 # Directories for object files #
 ################################
 
 GLX_DIR		:= release_glx
+LIB_DIR		:= release_lib
 
 ################
 # Binary files #
 ################
 
 GLX_TARGET	:= $(GLX_DIR)/tasquake.glx
+LIB_TARGET  := $(LIB_DIR)/libtasquake.so
+
 
 ################
 
@@ -39,15 +42,17 @@ RM_DIRS = $(_E)rm -fr $(_DIRS)
 $(GLX_DIR):
 	$(MKDIR)
 
-CFLAGS += -funsigned-char -O6 \
-	-D__linux__	-Wall \
+$(LIB_DIR):
+	$(MKDIR)
+
+CFLAGS += -funsigned-char		-O6 \
+	-D__linux__	-march=pentiumpro	-Wall \
 	-funroll-loops	-fomit-frame-pointer	-DNDEBUG \
 	-ffp-contract=off -ffloat-store \
 	-fno-strength-reduce	-fexpensive-optimizations \
 	-I../dependencies -I/usr/include
 
-
-LDFLAGS := -lm -ldl
+LDFLAGS := -lm -ldl -lstdc++
 
 #######
 # GLX #
@@ -85,7 +90,7 @@ GLX_CFLAGS := $(CFLAGS) \
 GLX_LDFLAGS := $(LDFLAGS) \
 	-lGL		-L/usr/X11R6/lib	-lX11 \
 	-lXext		-lXxf86dga		-lXxf86vm \
-	-lpng		-ljpeg -lstdc++
+	-lpng		-ljpeg
 
 glx: _DIR := $(GLX_DIR)
 glx: _OBJS := $(GLX_C_OBJS) $(GLX_CPP_OBJS)
@@ -111,9 +116,51 @@ glxclean:
 glxclobber: _FILES := $(GLX_TARGET)
 glxclobber: glxclean
 
+#######
+# LIB #
+#######
+
+LIB_CFLAGS := $(CFLAGS) -fPIC -DGLQUAKE -DLIB
+LIB_LDFLAGS := $(LDFLAGS) -shared
+
+LIB_C_FILES = main_lib host cmd console cvar common wad keys pr_edict \
+		      gl_model net_main sv_main host_cmd pr_exec sv_user sv_phys pr_cmds cl_main cl_tent \
+			  cl_input chase cl_demo mathlib net_bsd sv_move net_loop net_dgrm menu net_udp \
+			  zone crc cd_null world cl_parse view sys_linux security
+
+LIB_CPP_FILES := afterframes bookmark camera data_export draw_stubs hooks hud ipc_linux ipc_main reset rewards savestate \
+	script_parse script_playback simulate state_test strafing test_runner utils
+
+LIB_C_OBJS := $(addprefix $(LIB_DIR)/, $(addsuffix .o, $(LIB_C_FILES)))
+LIB_CPP_OBJS := $(addprefix $(LIB_DIR)/, $(addsuffix .o, $(LIB_CPP_FILES)))
+
+lib: _DIR := $(LIB_DIR)
+lib: _OBJS := $(LIB_C_OBJS) $(LIB_CPP_OBJS)
+lib: _LDFLAGS := $(LIB_LDFLAGS)
+lib: _CFLAGS := $(LIB_CFLAGS)
+lib: $(LIB_TARGET)
+
+$(LIB_TARGET): $(LIB_DIR) $(LIB_C_OBJS) $(LIB_CPP_OBJS)
+	$(BUILD)
+
+$(LIB_C_OBJS): $(LIB_DIR)/%.o: %.c quakedef.h
+	$(C_BUILD)
+
+$(LIB_CPP_OBJS): $(LIB_DIR)/%.o: tas/%.cpp quakedef.h
+	$(CPP_BUILD)
+
+libclean: _FILES += $(LIB_C_OBJS) $(LIB_CPP_OBJS)
+libclean: _DIRS := $(LIB_DIR)
+libclean:
+	$(RM_FILES)
+	$(RM_DIRS)
+
+libclobber: _FILES := $(LIB_TARGET)
+libclobber: libclean
+
 #################
 
-clean: glxclean
+clean: glxclean libclean
 
 clobber: _DIRS := $(GLX_DIR)
 clobber:

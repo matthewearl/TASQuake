@@ -40,6 +40,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "quakedef.h"
 
+qboolean isLibrary = false;
 qboolean isDedicated = false;
 
 int	nostdout = 0;
@@ -264,6 +265,7 @@ void Sys_LowFPPrecision (void)
 
 char	*argv0;
 
+#ifndef LIB
 int main (int argc, char **argv)
 {
 	int		j;
@@ -332,6 +334,7 @@ int main (int argc, char **argv)
 			Sys_LineRefresh ();
 	}
 }
+#endif
 
 /*
 ================
