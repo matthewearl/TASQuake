@@ -191,7 +191,7 @@ static ddef_t* ED_FindField(char* name)
 	for (i = 0; i < progs->numfielddefs; i++)
 	{
 		def = &pr_fielddefs[i];
-		if (!strcmp(pr_strings + def->s_name, name))
+		if (!strcmp(PR_GetString(def->s_name), name))
 			return def;
 	}
 
@@ -213,7 +213,7 @@ static qboolean _ED_ParseEpair(void* base, ddef_t* key, char* s)
 	switch (key->type & ~DEF_SAVEGLOBAL)
 	{
 	case ev_string:
-		*(string_t*)d = ED_NewString(s) - pr_strings;
+		*(string_t*)d = ED_NewString(s);
 		break;
 
 	case ev_float:
@@ -373,7 +373,7 @@ static char* _PR_UglyValueString(etype_t type, eval_t* val)
 	switch (type)
 	{
 	case ev_string:
-		sprintf(line, "%s", pr_strings + val->string);
+		sprintf(line, "%s", PR_GetString(val->string));
 		break;
 
 	case ev_entity:
@@ -382,12 +382,12 @@ static char* _PR_UglyValueString(etype_t type, eval_t* val)
 
 	case ev_function:
 		f = pr_functions + val->function;
-		sprintf(line, "%s", pr_strings + f->s_name);
+		sprintf(line, "%s", PR_GetString(f->s_name));
 		break;
 
 	case ev_field:
 		def = ED_FieldAtOfs(val->_int);
-		sprintf(line, "%s", pr_strings + def->s_name);
+		sprintf(line, "%s", PR_GetString(def->s_name));
 		break;
 
 	case ev_void:
@@ -427,7 +427,7 @@ static void ED_WriteGlobals(std::ofstream& out)
 		if (type != ev_string && type != ev_float && type != ev_entity)
 			continue;
 
-		name = pr_strings + def->s_name;
+		name = PR_GetString(def->s_name);
 		out << '"' << name << "\" ";
 		out << '"' << _PR_UglyValueString((etype_t)type, (eval_t *)&pr_globals[def->ofs]) << "\"\n";
 	}
@@ -443,7 +443,7 @@ static void ED_Write(std::ofstream& out, edict_t *ed)
 	for (i = 1; i < progs->numfielddefs; i++)
 	{
 		d = &pr_fielddefs[i];
-		name = pr_strings + d->s_name;
+		name = PR_GetString(d->s_name);
 		//if (name[strlen(name)-2] == '_')
 			//continue;	// skip _x, _y, _z vars
 
@@ -614,7 +614,7 @@ static ddef_t* ED_FindGlobal(char* name)
 	for (i = 0; i < progs->numglobaldefs; i++)
 	{
 		def = &pr_globaldefs[i];
-		if (!strcmp(pr_strings + def->s_name, name))
+		if (!strcmp(PR_GetString(def->s_name), name))
 			return def;
 	}
 
