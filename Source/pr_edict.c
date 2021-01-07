@@ -33,6 +33,7 @@ int		pr_edict_size;			// in bytes
 
 unsigned short	pr_crc;
 
+static int		pr_stringssize;
 static	const char	**pr_knownstrings;
 static	int		pr_maxknownstrings;
 static	int		pr_numknownstrings;
@@ -707,7 +708,7 @@ void ED_ParseGlobals (char *data)
 ED_NewString
 =============
 */
-static string_t ED_NewString (char *string)
+string_t ED_NewString (char *string)
 {
 	char	*new_p;
 	int		i, l;
@@ -1142,12 +1143,12 @@ int NUM_FOR_EDICT (edict_t *e)
 static void PR_AllocStringSlots (void)
 {
 	pr_maxknownstrings += PR_STRING_ALLOCSLOTS;
-	Con_DPrintf2("PR_AllocStringSlots: realloc'ing for %d slots\n", pr_maxknownstrings);
+	Con_DPrintf("PR_AllocStringSlots: realloc'ing for %d slots\n", pr_maxknownstrings);
 	pr_knownstrings = (const char **) Z_Realloc ((void *)pr_knownstrings, pr_maxknownstrings * sizeof(char *));
 }
 
 // Taken from Quakespasm
-const char *PR_GetString (int num)
+char *PR_GetString (int num)
 {
 	if (num >= 0 && num < pr_stringssize)
 		return pr_strings + num;
@@ -1169,7 +1170,7 @@ const char *PR_GetString (int num)
 
 
 // Taken from Quakespasm
-int PR_SetEngineString (const char *s)
+int PR_SetEngineString (char *s)
 {
 	int		i;
 

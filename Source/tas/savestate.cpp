@@ -198,6 +198,7 @@ static ddef_t* ED_FindField(char* name)
 	return NULL;
 }
 
+
 static qboolean _ED_ParseEpair(void* base, ddef_t* key, char* s)
 {
 	int		i;
