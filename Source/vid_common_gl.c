@@ -19,6 +19,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 // vid_common_gl.c -- Common code for vid_wgl.c and vid_glx.c
 
+#ifndef _WIN32
+#include <GL/glx.h>
+#endif
+
 #include "quakedef.h"
 
 #ifdef _WIN32
