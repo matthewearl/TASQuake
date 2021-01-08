@@ -39,15 +39,13 @@ RM_DIRS = $(_E)rm -fr $(_DIRS)
 $(GLX_DIR):
 	$(MKDIR)
 
-CFLAGS += -funsigned-char \
+CFLAGS += -funsigned-char -O6 \
 	-D__linux__	-Wall \
 	-funroll-loops	-fomit-frame-pointer	-DNDEBUG \
 	-ffp-contract=off -ffloat-store \
 	-fno-strength-reduce	-fexpensive-optimizations \
 	-I../dependencies -I/usr/include
 
-CFLAGS += -O6
-CFLAGS += -O0 -ggdb
 
 LDFLAGS := -lm -ldl
 
