@@ -59,6 +59,9 @@ void Security_Init (void)
 {
 	security_loaded = false;
 
+    if (isLibrary)
+        return;
+
 #ifdef _WIN32
 	if (!(hSecurity = LoadLibrary("qsecurity.dll")))
 #else

@@ -867,7 +867,10 @@ void Mod_LoadTexinfo (lump_t *l)
 		if (!loadmodel->textures)
 		{
 			out->texture = r_notexture_mip;	// checkerboard texture
-			out->flags = 0;
+
+            // None of the textures are loaded in library mode, yet the flags are important
+            if (!isLibrary)
+                out->flags = 0;
 		}
 		else
 		{
@@ -877,7 +880,10 @@ void Mod_LoadTexinfo (lump_t *l)
 			if (!out->texture)
 			{
 				out->texture = r_notexture_mip;	// texture not found
-				out->flags = 0;
+
+                // None of the textures are loaded in library mode, yet the flags are important
+                if (!isLibrary)
+                    out->flags = 0;
 			}
 		}
 	}
@@ -973,6 +979,9 @@ void Mod_LoadFaces (lump_t *l)
 			out->styles[i] = in->styles[i];
 		i = LittleLong(in->lightofs);
 		out->samples = (i == -1) ? NULL : loadmodel->lightdata + i * 3;
+
+        if (isLibrary)
+            continue;
 
 	// set the drawing flags flag
 		if (ISSKYTEX(out->texinfo->texture->name))	// sky
@@ -1577,6 +1586,9 @@ void Mod_LoadAliasModelTexture (char *identifier, int flags, int *gl_texnum, int
 {
 	char	loadpath[64];
 
+    if (isLibrary)
+        return;
+
 	Q_snprintfz (loadpath, sizeof(loadpath), "textures/models/%s", identifier);
 	*gl_texnum = GL_LoadTextureImage (loadpath, identifier, 0, 0, flags);
 	if (*gl_texnum)
@@ -1964,6 +1976,9 @@ Mod_LoadQ3ModelTexture
 void Mod_LoadQ3ModelTexture (char *identifier, int flags, int *gl_texnum, int *fb_texnum)
 {
 	char	loadpath[64];
+
+    if (isLibrary)
+        return;
 
 	Q_snprintfz (loadpath, sizeof(loadpath), "textures/q3models/%s", identifier);
 	*gl_texnum = GL_LoadTextureImage (loadpath, identifier, 0, 0, flags);
@@ -2375,6 +2390,9 @@ void Mod_LoadSpriteModelTexture (char *sprite_name, dspriteframe_t *pinframe, ms
 {
 	char	name[64], sprite[64], sprite2[64];
 
+    if (isLibrary)
+        return;
+
 	COM_StripExtension (sprite_name, sprite);
 	Q_snprintfz (name, sizeof(name), "%s_%i", sprite_name, framenum);
 	Q_snprintfz (sprite2, sizeof(sprite2), "textures/sprites/%s_%i", COM_SkipPath(sprite), framenum);
@@ -2494,6 +2512,9 @@ void Mod_LoadSpriteModel (model_t *mod, void *buffer)
 	dsprite_t	*pin;
 	msprite_t	*psprite;
 	dspriteframetype_t *pframetype;
+
+    if (isLibrary)
+        return;
 
 	pin = (dsprite_t *)buffer;
 

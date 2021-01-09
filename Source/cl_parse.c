@@ -267,7 +267,7 @@ void CL_ParseServerInfo (void)
 	char	*str, tempname[MAX_QPATH];
 	char	model_precache[MAX_MODELS][MAX_QPATH], sound_precache[MAX_SOUNDS][MAX_QPATH];
 	extern	void R_PreMapLoad (char *);
-#ifdef GLQUAKE
+#if defined(GLQUAKE) && !defined(LIB)
 	extern qboolean r_loadq3player;
 #endif
 
@@ -321,7 +321,7 @@ void CL_ParseServerInfo (void)
 		if (nummodels == MAX_MODELS)
 			Host_Error ("Server sent too many model precaches");
 
-#ifdef GLQUAKE
+#if defined(GLQUAKE) && !defined(LIB)
 		if (gl_loadq3models.value)
 		{
 			if (!strcmp(str, cl_modelnames[mi_player]) && 
@@ -356,7 +356,7 @@ void CL_ParseServerInfo (void)
 			}
 		}
 	}
-#ifdef GLQUAKE
+#if defined(GLQUAKE) && !defined(LIB)
 // load the extra "no-flamed-torch" model
 	if (nummodels == MAX_MODELS)
 	{
@@ -496,7 +496,7 @@ void CL_ParseUpdate (int bits)
 			ent->syncbase = (model->synctype == ST_RAND) ? (float)(rand() & 0x7fff) / 0x7fff : 0.0;
 		else
 			forcelink = true;	// hack to make null model players work
-#ifdef GLQUAKE
+#if defined(GLQUAKE) && !defined(LIB)
 		if (num > 0 && num <= cl.maxclients)
 			R_TranslatePlayerSkin (num - 1);
 #endif
@@ -510,7 +510,7 @@ void CL_ParseUpdate (int bits)
 	else
 		ent->colormap = vid.colormap;
 
-#ifdef GLQUAKE
+#if defined(GLQUAKE) && !defined(LIB)
 	skin = (bits & U_SKIN) ? MSG_ReadByte() : ent->baseline.skin;
 	if (skin != ent->skinnum)
 	{
@@ -702,6 +702,10 @@ void CL_NewTranslation (int slot)
 {
 	int	i, j, top, bottom;
 	byte	*dest, *source;
+
+    if (isLibrary) {
+        return;
+    }
 
 	if (slot > cl.maxclients)
 		Host_Error ("CL_NewTranslation: slot > cl.maxclients");

@@ -47,7 +47,7 @@ void M_Menu_Main_f (void);
 	void M_Menu_Options_f (void);
 		void M_Menu_Keys_f (void);
 		void M_Menu_VideoModes_f (void);
-#ifdef GLQUAKE
+#if defined(GLQUAKE) && !defined(LIB)
 		void M_Menu_VideoOptions_f (void);
 			void M_Menu_Particles_f (void);
 #endif
@@ -75,7 +75,7 @@ void M_Main_Draw (void);
 	void M_Options_Draw (void);
 		void M_Keys_Draw (void);
 		void M_VideoModes_Draw (void);
-#ifdef GLQUAKE
+#if defined(GLQUAKE) && !defined(LIB)
 		void M_VideoOptions_Draw (void);
 			void M_Particles_Draw (void);
 #endif
@@ -495,7 +495,7 @@ int	MAIN_ITEMS = 6;
 
 void M_Menu_Main_f (void)
 {
-#ifdef GLQUAKE
+#if defined(GLQUAKE) && !defined(LIB)
 	if (nehahra)
 	{
 		if (NehGameType == TYPE_DEMO)
@@ -526,7 +526,7 @@ void M_Main_Draw (void)
 	p = Draw_CachePic ("gfx/ttl_main.lmp");
 	M_DrawPic ((320 - p->width) >> 1, 4, p);
 
-#ifdef GLQUAKE
+#if defined(GLQUAKE) && !defined(LIB)
 	if (nehahra)
 	{
 		if (NehGameType == TYPE_BOTH)
@@ -583,7 +583,7 @@ void M_Main_Key (int key)
 	
 	case K_ENTER:
 		m_entersound = true;
-#ifdef GLQUAKE
+#if defined(GLQUAKE) && !defined(LIB)
 		if (nehahra)	// nehahra menus
 		{
 			if (NehGameType == TYPE_GAME)
@@ -2116,7 +2116,7 @@ void M_Keys_Key (int k)
 //=============================================================================
 /* VIDEO OPTIONS MENU */
 
-#ifdef GLQUAKE
+#if defined(GLQUAKE) && !defined(LIB)
 
 #define	VOM_ITEMS	16
 
@@ -4487,7 +4487,7 @@ void M_Init (void)
 	Cmd_AddCommand ("menu_options", M_Menu_Options_f);
 	Cmd_AddCommand ("menu_keys", M_Menu_Keys_f);
 	Cmd_AddCommand ("menu_videomodes", M_Menu_VideoModes_f);
-#ifdef GLQUAKE
+#if defined(GLQUAKE) && !defined(LIB)
 	Cmd_AddCommand ("menu_videooptions", M_Menu_VideoOptions_f);
 	Cmd_AddCommand ("menu_particles", M_Menu_Particles_f);
 #endif
@@ -4588,7 +4588,7 @@ void M_Draw (void)
 		M_Keys_Draw ();
 		break;
 
-#ifdef GLQUAKE
+#if defined(GLQUAKE) && !defined(LIB)
 	case m_videooptions:
 		M_VideoOptions_Draw ();
 		break;

@@ -300,7 +300,7 @@ void Host_Map_f (void)
 	if (cmd_source != src_command)
 		return;
 
-#ifdef GLQUAKE
+#if defined(GLQUAKE) && !defined(LIB)
 	if (nehahra)
 	{
 		if (NehGameType == TYPE_DEMO)

@@ -22,13 +22,25 @@ cvar_t		vid_gamma = {"gamma", "1", CVAR_ARCHIVE};
 cvar_t		vid_contrast = {"contrast", "1", CVAR_ARCHIVE};
 cvar_t		scr_viewsize = {"viewsize","100", CVAR_ARCHIVE};
 cvar_t		scr_conscale = {"scr_conscale", "1", CVAR_ARCHIVE};
+cvar_t      scr_conspeed = {"scr_conspeed", "1000"};
+cvar_t      scr_consize = {"scr_consize", "0.5"};
 cvar_t		scr_sbaralpha = {"scr_sbaralpha", "0.75", CVAR_ARCHIVE};
 float		scr_con_current;
+int		scr_copytop = 0;
+int		scr_copyeverything = 0;
 cvar_t		bgmvolume = {"bgmvolume", "1", CVAR_ARCHIVE};
 cvar_t		sfxvolume = {"volume", "0.7", CVAR_ARCHIVE};
 cvar_t		bgm_extmusic = {"bgm_extmusic", "1", CVAR_ARCHIVE};
 unsigned int d_8to24table[256];
 int gl_warpimagesize = 0;
+float		scr_conlines = 30;
+int         sb_lines = 0;
+qboolean vid_hwgamma_enabled = false;
+
+texture_t *r_notexture_mip = NULL;
+qboolean    qmb_initialized = false;
+int         scr_fullupdate = 0;
+int		lightmode = 2;
 
 cvar_t  r_overlay = { "r_overlay", "0" };
 cvar_t  r_overlay_pos = { "r_overlay_pos", "0" };
@@ -38,6 +50,36 @@ cvar_t  r_overlay_offset = {"r_overlay_offset", "0 0 300", 0};
 cvar_t  r_overlay_angles = { "r_overlay_angles", "90 0 0", 0};
 cvar_t  r_norefresh = { "r_norefresh", "0", 0};
 
+cvar_t	r_fullbright = {"r_fullbright", "0"};
+cvar_t	r_fullbrightskins = {"r_fullbrightskins", "0"};
+
+cvar_t	gl_part_explosions = {"gl_part_explosions", "0"};
+cvar_t	gl_part_trails = {"gl_part_trails", "0"};
+cvar_t	gl_part_spikes = {"gl_part_spikes", "0"};
+cvar_t	gl_part_gunshots = {"gl_part_gunshots", "0"};
+cvar_t	gl_part_blood = {"gl_part_blood", "0"};
+cvar_t	gl_part_telesplash = {"gl_part_telesplash", "0"};
+cvar_t	gl_part_blobs = {"gl_part_blobs", "0"};
+cvar_t	gl_part_lavasplash = {"gl_part_lavasplash", "0"};
+cvar_t	gl_part_flames = {"gl_part_flames", "0"};
+cvar_t	gl_part_lightning = {"gl_part_lightning", "0"};
+cvar_t	gl_part_damagesplash = {"gl_part_damagesplash", "0"};
+cvar_t	gl_part_muzzleflash = {"gl_part_muzzleflash", "0", 0};
+cvar_t  gl_waterfog = {"gl_waterfog", "1"};
+cvar_t  gl_waterfog_density = {"gl_waterfog_density", "1"};
+cvar_t      gl_loadlitfiles = {"gl_loadlitfiles", "1"};
+cvar_t      gl_polyblend = {"gl_polyblend", "1"};
+cvar_t       gl_externaltextures_bmodels = {"gl_externaltextures_bmodels", "0"};
+cvar_t	gl_externaltextures_world = {"gl_externaltextures_world", "0"};
+cvar_t	r_nospr32 = {"nospr32", "0"};
+cvar_t       s_volume = {"volume", "0.7", CVAR_ARCHIVE};
+cvar_t       r_skybox = {"r_skybox", "", 0};
+cvar_t       _windowed_mouse = {"_windowed_mouse", "1", 0};
+cvar_t       gl_picmip = {"gl_picmip", "0", 0};
+cvar_t       r_wateralpha = {"r_wateralpha", "1"};
+byte         color_white[4] = {255, 255, 255, 0};
+
+qboolean	volume_changed = false;
 
 void SCR_UpdateScreen (void)
 {
@@ -240,6 +282,7 @@ extern cvar_t cl_minpitch;
 static vec3_t   in_viewangle = {0.f, 0.f, 0.f};
 
 static qboolean   in_override_usercmd = false;
+static qboolean   in_angle_changed = false;
 static usercmd_t  in_usercmd = {};
 
 
@@ -252,6 +295,7 @@ void IN_AddAngleDelta(float dx, float dy)
 {
 	in_viewangle[YAW] += dx;
 	in_viewangle[PITCH] += dy;
+    in_angle_changed = true;
 }
 
 
@@ -259,6 +303,7 @@ void IN_SetAngle(float yaw, float pitch)
 {
 	in_viewangle[YAW] = yaw;
 	in_viewangle[PITCH] = pitch;
+    in_angle_changed = true;
 }
 
 
@@ -282,7 +327,8 @@ void IN_Move(usercmd_t *cmd)
         cmd->upmove = in_usercmd.upmove;
 
         in_override_usercmd = false;
-    } else {
+    }
+    if (in_angle_changed) {
         cl.viewangles[YAW] = in_viewangle[YAW];
         cl.viewangles[PITCH] = in_viewangle[PITCH];
 
@@ -290,7 +336,14 @@ void IN_Move(usercmd_t *cmd)
             cl.viewangles[PITCH] = 90;
         if (cl.viewangles[PITCH] < -90)
             cl.viewangles[PITCH] = -90;
+
+        in_angle_changed = false;
     }
+}
+
+
+void IN_Commands (void)
+{
 }
 
 
@@ -305,6 +358,9 @@ void R_Init (void)
     );
 
     memset(r_particles, 0, 2048 * sizeof(r_particle_t));
+
+    r_free_particles = r_particles;
+	r_active_particles = NULL;
 }
 
 
@@ -312,6 +368,39 @@ void Sys_SendKeyEvents (void)
 {
 }
 
+
+void Draw_BeginDisc (void)
+{
+}
+
+
+void Draw_EndDisc (void)
+{
+}
+
+
+void R_GetParticleMode (void)
+{
+}
+
+
+void R_SetParticleMode (part_mode_t val)
+{
+}
+
+
+void R_PreMapLoad (char *mapname)
+{
+}
+
+
+void R_TeleportSplash (vec3_t org)
+{
+}
+
+void R_RocketTrail (vec3_t start, vec3_t end, vec3_t *trail_origin, trail_type_t type)
+{
+}
 
 static quakeparms_t	parms;
 

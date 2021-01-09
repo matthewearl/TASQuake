@@ -46,7 +46,9 @@ void SCR_DrawClock (void);
 void SCR_DrawSpeed (void);
 void SCR_Draw_TAS_Hud (void);
 void SCR_DrawFPS (void);
+#if defined(GLQUAKE) && !defined(LIB)
 void SCR_DrawStats (void);
+#endif
 void SCR_DrawVolume (void);
 void SCR_DrawPlaybackStats (void);
 

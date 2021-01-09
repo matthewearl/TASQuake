@@ -1029,7 +1029,7 @@ void SV_SpawnServer (char *server)
 	edict_t	*ent;
 	extern	void R_PreMapLoad (char *);
 
-#ifdef GLQUAKE
+#if defined(GLQUAKE) && !defined(LIB)
 	if (nehahra)
 	{
 		if (NehGameType == TYPE_DEMO)

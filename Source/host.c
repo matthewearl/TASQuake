@@ -538,7 +538,7 @@ qboolean Host_FilterTime (double time)
 	double	fps = max(10, cl_maxfps.value);
 	fps = min(72, fps);
 
-	if (!cls.demoplayback && !cls.timedemo && tas_playing.value != 0)
+	if (isLibrary || (!cls.demoplayback && !cls.timedemo && tas_playing.value != 0))
 	{
 		float ft = (float)1 / fps;
 		realtime += ft;
@@ -1019,7 +1019,7 @@ void Host_Init (quakeparms_t *parms)
 	SList_Init ();
 	SList_Load ();
 
-	if (cls.state != ca_dedicated)
+	if (!isLibrary && cls.state != ca_dedicated)
 	{
 		if (!(host_basepal = (byte *)COM_LoadHunkFile("gfx/palette.lmp")))
 			Sys_Error ("Couldn't load gfx/palette.lmp");
@@ -1046,6 +1046,11 @@ void Host_Init (quakeparms_t *parms)
 		CL_Init ();
 		TAS_Init();
 	}
+    if (isLibrary) {
+		R_Init ();
+		CL_Init ();
+		TAS_Init();
+    }
 
 #ifdef GLQUAKE
 	if (nehahra)

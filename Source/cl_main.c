@@ -130,7 +130,7 @@ void CL_ClearState (void)
 #endif
 }
 
-#ifdef GLQUAKE
+#if defined(GLQUAKE) && !defined(LIB)
 // nehahra supported
 void Neh_ResetSFX (void)
 {
@@ -219,7 +219,7 @@ void CL_EstablishConnection (char *host)
 	if (cls.state == ca_dedicated)
 		return;
 
-#ifdef GLQUAKE
+#if defined(GLQUAKE) && !defined(LIB)
 	if (nehahra)
 	        num_sfxorig = num_sfx;
 #endif

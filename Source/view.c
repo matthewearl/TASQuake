@@ -1254,6 +1254,8 @@ void SCR_DrawSpeed (void)
 
 float	drawstats_limit;
 
+
+#if defined(GLQUAKE) && !defined(LIB)
 /*
 ===============
 SCR_DrawStats
@@ -1298,6 +1300,7 @@ void SCR_DrawStats (void)
 		}
 	}
 }
+#endif
 
 /*
 ===============
