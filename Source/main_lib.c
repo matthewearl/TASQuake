@@ -363,6 +363,9 @@ void R_Init (void)
 	r_active_particles = NULL;
 }
 
+void R_RemoveEfrags (entity_t *ent)
+{
+}
 
 void Sys_SendKeyEvents (void)
 {
