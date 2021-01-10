@@ -5,6 +5,12 @@
 
 //qpic_t *pic_ovr, *pic_ins; //johnfitz -- new cursor handling
 
+#define NUMVERTEXNORMALS	162
+
+float	r_avertexnormals[NUMVERTEXNORMALS][3] =
+#include "anorms.h"
+;
+
 int clearnotify;
 vec3_t	vup;
 vec3_t	vpn;
@@ -183,25 +189,6 @@ void Sys_Sleep (void)
 }
 
 
-// Like R_ParseParticleEffect in r_part.c except it just does the parsing
-void R_ParseParticleEffect (void)
-{
-	int			i;
-
-	for (i=0 ; i<3 ; i++)
-		MSG_ReadCoord ();
-	for (i=0 ; i<3 ; i++)
-		MSG_ReadChar ();
-	MSG_ReadByte ();
-	MSG_ReadByte ();
-}
-
-
-void R_RunParticleEffect (vec3_t org, vec3_t dir, int color, int count)
-{
-}
-
-
 void D_FlushCaches (void)
 {
 }
@@ -275,6 +262,7 @@ void R_StoreEfrags (efrag_t **ppefrag)
 
 // Input stubs
 
+qboolean in_overlay = false;
 
 extern cvar_t cl_maxpitch;
 extern cvar_t cl_minpitch;
@@ -347,20 +335,9 @@ void IN_Commands (void)
 }
 
 
-r_particle_t	*r_particles, *r_active_particles, *r_free_particles;
-
 void R_Init (void)
 {
-    // Needed by savestate.cpp
-	r_particles = (r_particle_t *) Hunk_AllocName(
-        2048 * sizeof(r_particle_t),
-        "classic:particles"
-    );
-
-    memset(r_particles, 0, 2048 * sizeof(r_particle_t));
-
-    r_free_particles = r_particles;
-	r_active_particles = NULL;
+    R_InitParticles();
 }
 
 void R_RemoveEfrags (entity_t *ent)
@@ -396,14 +373,6 @@ void R_PreMapLoad (char *mapname)
 {
 }
 
-
-void R_TeleportSplash (vec3_t org)
-{
-}
-
-void R_RocketTrail (vec3_t start, vec3_t end, vec3_t *trail_origin, trail_type_t type)
-{
-}
 
 static quakeparms_t	parms;
 

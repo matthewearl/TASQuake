@@ -130,7 +130,7 @@ LIB_C_FILES = main_lib host cmd console cvar common wad keys pr_edict \
 		      gl_model net_main sv_main host_cmd pr_exec sv_user sv_phys pr_cmds cl_main cl_tent \
 			  cl_input chase cl_demo mathlib net_bsd sv_move net_loop net_dgrm menu net_udp \
 			  zone crc cd_null world cl_parse view sys_linux security cl_slist iplog version \
-			  net_vcr
+			  net_vcr r_part
 
 LIB_CPP_FILES := afterframes bookmark camera data_export draw_stubs hooks hud ipc_linux ipc_main reset rewards savestate \
 	script_parse script_playback simulate state_test strafing test_runner utils

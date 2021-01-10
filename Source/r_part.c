@@ -190,7 +190,7 @@ void D_DrawParticle (particle_t *pparticle)
 
 #endif	// !id386
 
-#ifdef GLQUAKE
+#if defined(GLQUAKE) && !defined(LIB)
 static void Classic_LoadParticleTexures (void)
 {
 	int		i, x, y;
@@ -241,7 +241,7 @@ void Classic_InitParticles (void)
 
 	r_particles = (r_particle_t *)Hunk_AllocName (r_numparticles * sizeof(r_particle_t), "classic:particles");
 
-#ifdef GLQUAKE
+#if defined(GLQUAKE) && !defined(LIB)
 	Classic_LoadParticleTexures ();
 #endif
 }
@@ -783,7 +783,7 @@ void Classic_DrawParticles (void)
 	int			i;
 	float		grav, time1, time2, time3, dvel, frametime;
 	r_particle_t	*p, *kill;
-#ifdef GLQUAKE
+#if defined(GLQUAKE) && !defined(LIB)
 	float		dist, scale, r_partscale;
 	vec3_t		up, right;
 	unsigned char *at, theAlpha;
@@ -792,7 +792,7 @@ void Classic_DrawParticles (void)
 	if (!r_active_particles || tas_gamestate == paused || in_overlay)
 		return;
 
-#ifdef GLQUAKE
+#if defined(GLQUAKE) && !defined(LIB)
 	r_partscale = 0.004 * tan(r_refdef.fov_x * (M_PI / 180) * 0.5f);
 
 	GL_Bind (particletexture);
@@ -805,9 +805,9 @@ void Classic_DrawParticles (void)
 
 	VectorScale (vup, 1.5, up);
 	VectorScale (vright, 1.5, right);
-#else
-	VectorScale (vright, xscaleshrink, r_pright);
-	VectorScale (vup, yscaleshrink, r_pup);
+#elif !defined(LIB)
+	VectorScale (vright, 1.0, r_pright);
+	VectorScale (vup, , r_pup);
 	VectorCopy (vpn, r_ppn);
 #endif
 	frametime = fabs(cl.ctime - cl.oldtime);
@@ -847,7 +847,7 @@ void Classic_DrawParticles (void)
 			break;
 		}
 
-#ifdef GLQUAKE
+#if defined(GLQUAKE) && !defined(LIB)
 		// hack a scale up to keep particles from disapearing
 		dist = (p->org[0] - r_origin[0])*vpn[0] + (p->org[1] - r_origin[1])*vpn[1] + (p->org[2] - r_origin[2])*vpn[2];
 		scale = 1 + dist * r_partscale;
@@ -861,7 +861,7 @@ void Classic_DrawParticles (void)
 		glVertex3f (p->org[0] + up[0]*scale, p->org[1] + up[1]*scale, p->org[2] + up[2]*scale);
 		glTexCoord2f (0, 1);
 		glVertex3f (p->org[0] + right[0]*scale, p->org[1] + right[1]*scale, p->org[2] + right[2]*scale);
-#else
+#elif !defined(LIB)
 		D_DrawParticle (p);
 #endif
 		p->org[0] += p->vel[0] * frametime;
@@ -923,7 +923,7 @@ void Classic_DrawParticles (void)
 		}
 	}
 
-#ifdef GLQUAKE
+#if defined(GLQUAKE) && !defined(LIB)
 	glEnd ();
 	glDisable (GL_BLEND);
 	glDepthMask (GL_TRUE);
@@ -935,7 +935,7 @@ void Classic_DrawParticles (void)
 void R_InitParticles (void)
 {
 	Classic_InitParticles ();
-#ifdef GLQUAKE
+#if defined(GLQUAKE) && !defined(LIB)
 	QMB_InitParticles ();
 #endif
 }
@@ -943,7 +943,7 @@ void R_InitParticles (void)
 void R_ClearParticles (void)
 {
 	Classic_ClearParticles ();
-#ifdef GLQUAKE
+#if defined(GLQUAKE) && !defined(LIB)
 	QMB_ClearParticles ();
 #endif
 }
@@ -951,14 +951,14 @@ void R_ClearParticles (void)
 void R_DrawParticles (void)
 {
 	Classic_DrawParticles ();
-#ifdef GLQUAKE
+#if defined(GLQUAKE) && !defined(LIB)
 	QMB_DrawParticles ();
 #endif
 }
 
 void R_ColorMappedExplosion (vec3_t org, int colorStart, int colorLength)
 {
-#ifdef GLQUAKE
+#if defined(GLQUAKE) && !defined(LIB)
 	if (qmb_initialized && gl_part_explosions.value)
 		QMB_ColorMappedExplosion (org, colorStart, colorLength);
 	else
