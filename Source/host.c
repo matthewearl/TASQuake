@@ -672,6 +672,9 @@ void _Host_Frame (double time)
 	{
 		return;
 	}
+#ifdef TRACK_RANDOM
+    Sys_Printf("Doing frame.  Time: %f\n", realtime);
+#endif
 
 	_Host_Frame_After_FilterTime_Hook();
 

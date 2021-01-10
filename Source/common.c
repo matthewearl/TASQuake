@@ -1730,6 +1730,9 @@ int tas_rand(void) // RAND_MAX assumed to be 32767
 	++index_;
 	next = next * 1103515245 + 12345;
 	int out = (unsigned int)(next / 65536) % 32768;
+#ifdef TRACK_RANDOM
+    Sys_Printf("tas_rand returned %d\n", out);
+#endif
 	return out;
 }
 

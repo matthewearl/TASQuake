@@ -89,6 +89,7 @@ qboolean	volume_changed = false;
 
 void SCR_UpdateScreen (void)
 {
+	R_DrawParticles ();
 }
 
 
@@ -226,13 +227,9 @@ int TexMgr_PadConditional (int s)
 }
 
 
-void R_RenderView (void)
-{
-}
-
-
 void R_NewMap (void)
 {
+	R_ClearParticles ();
 }
 
 
@@ -258,6 +255,12 @@ void R_AddEfrags (entity_t *ent)
 
 void R_StoreEfrags (efrag_t **ppefrag)
 {
+}
+
+void QMB_StaticBubble (entity_t *ent)
+{
+    rand();
+    rand();
 }
 
 // Input stubs
@@ -338,6 +341,8 @@ void IN_Commands (void)
 void R_Init (void)
 {
     R_InitParticles();
+
+    qmb_initialized = true;     // needed to render bubbles
 }
 
 void R_RemoveEfrags (entity_t *ent)
