@@ -426,6 +426,30 @@ PlaybackInfo& GetPlaybackInfo()
 	return playback;
 }
 
+
+int Get_Num_Blocks(void)
+{
+    return playback.current_script.blocks.size();
+}
+
+void Get_Block_Frames(int *frames)
+{
+	for (auto i = 0; i < playback.current_script.blocks.size(); ++i)
+	{
+		auto& block = playback.current_script.blocks[i];
+        frames[i] = block.frame;
+    }
+}
+
+void Set_Block_Frames(int *frames)
+{
+	for (auto i = 0; i < playback.current_script.blocks.size(); ++i)
+	{
+		auto& block = playback.current_script.blocks[i];
+        block.frame = frames[i];
+    }
+}
+
 bool TAS_Script_Load(const char* name)
 {
 	Clear_Bookmarks();

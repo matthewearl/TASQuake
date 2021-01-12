@@ -1,4 +1,5 @@
 #include "quakedef.h"
+#include "tas/hooks.h"
 
 
 // Stub implementations
@@ -497,6 +498,27 @@ read_player_info(vec3_t pos, vec3_t vel, vec3_t view_angle, qboolean *jump_relea
     }
 
     return rc;
+}
+
+
+int
+get_num_blocks(void)
+{
+    return Get_Num_Blocks();
+}
+
+
+void
+get_block_frames(int *frames)
+{
+    Get_Block_Frames(frames);
+}
+
+
+void
+set_block_frames(int *frames)
+{
+    Set_Block_Frames(frames);
 }
 
 

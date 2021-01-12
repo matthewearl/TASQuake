@@ -24,6 +24,10 @@ extern "C"
 	void IN_Move_Hook(usercmd_t* cmd);
 	void SCR_Draw_TAS_HUD_Hook(void);
 	void Draw_Lines_Hook(void);
+
+    int Get_Num_Blocks(void);
+    void Get_Block_Frames(int *frames);
+    void Set_Block_Frames(int *frames);
 #ifdef __cplusplus
 }
 #endif
