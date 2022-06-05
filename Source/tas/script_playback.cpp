@@ -385,6 +385,13 @@ void Script_Playback_Host_Frame_Hook()
 		auto& block = playback.current_script.blocks[current_block];
 
 		std::string cmd = block.GetCommand();
+        // MLE: debug block nums
+        /*
+        Sys_Printf("block num: %d  cmd: %s  frame: %d  %d\n",
+                current_block, cmd.c_str(),
+                playback.current_script.blocks[current_block].frame,
+                playback.current_frame);
+        */
 		playback.stacked.Stack(block);
 		AddAfterframes(0, cmd.c_str(), NoFilter);
 		++current_block;
