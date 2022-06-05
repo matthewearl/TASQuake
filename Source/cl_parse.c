@@ -1156,12 +1156,14 @@ void CL_ParseServerMessage (void)
 			cl.intermission = 1;
 			// intermission bugfix -- by joe
 			cl.completed_time = cl.mtime[0];
+            cl.completed_time_double = cl.mtime[0];
 			vid.recalc_refdef = true;	// go to full screen
 			break;
 
 		case svc_finale:
 			cl.intermission = 2;
 			cl.completed_time = cl.time;
+            cl.completed_time_double = cl.mtime[0];
 			vid.recalc_refdef = true;	// go to full screen
 			SCR_CenterPrint (MSG_ReadString());
 			break;
@@ -1169,6 +1171,7 @@ void CL_ParseServerMessage (void)
 		case svc_cutscene:
 			cl.intermission = 3;
 			cl.completed_time = cl.time;
+            cl.completed_time_double = cl.mtime[0];
 			vid.recalc_refdef = true;	// go to full screen
 			SCR_CenterPrint (MSG_ReadString());
 			break;

@@ -526,9 +526,7 @@ void
 check_intermission(int *intermission, double *completed_time)
 {
     *intermission = cl.intermission;
-
-    // TODO: Add this back in
-    //*completed_time = cl.completed_time_double;
+    *completed_time = cl.completed_time_double;
 }
 
 
