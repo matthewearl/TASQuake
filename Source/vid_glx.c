@@ -227,6 +227,7 @@ static int XLateKey (XKeyEvent *ev)
 static void install_grabs (void)
 {
 	int	DGAflags = 0;
+    return;
 
 	XGrabPointer (dpy, win, True, 0, GrabModeAsync, GrabModeAsync, win, None, CurrentTime);
 
@@ -253,6 +254,7 @@ static void install_grabs (void)
 
 static void uninstall_grabs (void)
 {
+    return;
 	if (dgamouse || dgakeyb)
 	{
 		XF86DGADirectVideo (dpy, DefaultScreen(dpy), 0);
