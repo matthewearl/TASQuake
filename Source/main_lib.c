@@ -540,36 +540,21 @@ get_time(void)
 
 
 // Enable this for profiling
-#if 0
+#ifdef LIB_TEST
 int
 main(int argc, char **argv)
 {
-    vec3_t pos, vel, view_angle;
-    int b = 0;
     int i, j;
-
     start_host(argc, argv);
-    add_command("map e1m1");
 
-    for (j = 0; j < 100; j++) {
-        while (!b) {
+    for (i = 0; i < 100; i++) {
+        add_command("tas_script_load test\n");
+        do_frame();
+        add_command("tas_script_play\n");
+        for (j = 0; j < 709; j++) {
             do_frame();
-            b = (read_player_info(pos, vel, view_angle) == 1);
         }
-
-        for (i = 0; i < 72; i++) {
-            do_frame();
-            read_player_info(pos, vel, view_angle);
-        }
-
-        add_key_event(119, true);
-
-        for (i = 0; i < 72 * 4; i++) {
-            do_frame();
-            read_player_info(pos, vel, view_angle);
-        }
-
-        add_command("restart");
+        add_command("tas_script_stop\n");
     }
 }
 #endif

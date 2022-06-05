@@ -25,6 +25,7 @@ LIB_DIR		:= release_lib
 
 GLX_TARGET	:= $(GLX_DIR)/tasquake.glx
 LIB_TARGET  := $(LIB_DIR)/libtasquake.so
+LIB_TEST_TARGET := $(LIB_DIR)/test_lib
 
 
 ################
@@ -47,15 +48,15 @@ $(LIB_DIR):
 
 CFLAGS += -funsigned-char \
 	-D__linux__	-Wall \
-	-funroll-loops	-fomit-frame-pointer	-DNDEBUG \
+	-funroll-loops	-DNDEBUG \
 	-ffp-contract=off -ffloat-store \
 	-fno-strength-reduce	-fexpensive-optimizations \
 	-I../dependencies -I/usr/include
 
-#CFLAGS += -O6
-CFLAGS += -O0 -ggdb
+CFLAGS += -O6
+#CFLAGS += -O0 -ggdb
 
-LDFLAGS := -lm -ldl -lstdc++
+LDFLAGS += -lm -ldl -lstdc++
 
 #######
 # GLX #
@@ -161,6 +162,19 @@ libclean:
 
 libclobber: _FILES := $(LIB_TARGET)
 libclobber: libclean
+
+############
+# LIB TEST #
+############
+
+lib-test: _DIR := $(LIB_DIR)
+lib-test: _OBJS := $(LIB_C_OBJS) $(LIB_CPP_OBJS)
+lib-test: _LDFLAGS := $(LDFLAGS) -Wl,--unresolved-symbols=ignore-all
+lib-test: _CFLAGS := $(LIB_CFLAGS) -DLIB_TEST
+lib-test: $(LIB_TEST_TARGET)
+
+$(LIB_TEST_TARGET): $(LIB_DIR) $(LIB_C_OBJS) $(LIB_CPP_OBJS)
+	$(BUILD)
 
 #################
 
