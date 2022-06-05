@@ -95,6 +95,12 @@ void Sys_ReleaseLock (void)
 // General routines
 // =======================================================================
 
+
+#ifdef LIB
+void Sys_Printf (char *fmt, ...)
+{
+}
+#else
 void Sys_Printf (char *fmt, ...)
 {
 	va_list		argptr;
@@ -128,6 +134,7 @@ void Sys_Printf (char *fmt, ...)
 		MSG_WriteString (&rcon_message, text);
 	}
 }
+#endif
 
 void Sys_Quit (void)
 {
