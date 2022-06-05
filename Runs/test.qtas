@@ -1,0 +1,71 @@
++1:
+	tas_strafe_version 2
+	disconnect
+	tas_set_seed
++1:
+	skill 0
+    map start
++6:
+	tas_strafe 1
+	tas_strafe_yaw 114.593
+	+tas_lgagst
++87:
+	tas_strafe_yaw 97.526
++87:
+	tas_strafe_yaw 148.211
+	-tas_lgagst
++50:
+	tas_strafe_yaw 184.955
++23:
+	tas_strafe_yaw 201.341
+	+tas_lgagst
++33:
+	tas_strafe_yaw 95.691
+	-tas_lgagst
++13:
+	+tas_jump
++6:
+	-tas_jump
+	+tas_lgagst
++109:
+	tas_strafe_yaw 180.341
++11:
+	cl_maxfps 10
++1:
+	cl_maxfps 72
++67:
+	tas_strafe_type 3
+	tas_strafe_yaw 259.091
+	tas_view_yaw 45
+	-tas_lgagst
++111:
+	tas_strafe_type 1
+	tas_strafe_yaw 41.32
+	tas_view_yaw 999
++1:
+	tas_strafe_yaw 76.597
++27:
+	+tas_lgagst
++6:
+	tas_strafe_yaw 80.217
++1:
+	-attack
++49:
+	tas_strafe_yaw 89.214
++50:
+	+attack
++2:
+	-attack
++48:
+	tas_view_pitch 25.6
+	tas_view_yaw 0.0384521
++1:
+	tas_strafe_yaw 121.745
++1:
+	tas_strafe_yaw 121.234
+	tas_view_pitch 25.7
+	tas_view_yaw 0.0549316
++26:
+	tas_strafe_yaw 180.692
++8:
+	+attack
