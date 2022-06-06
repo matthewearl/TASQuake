@@ -114,9 +114,9 @@
 	tas_strafe_yaw 204.521
 +16:
 	tas_strafe_yaw 3.334
-+29:
++26:
 	tas_strafe_yaw 3.093
-+3:
++6:
 	-tas_lgagst
 +37:
 	tas_strafe_yaw 3.032
@@ -125,21 +125,21 @@
 	tas_strafe_yaw 82.985
 +35:
 	tas_strafe_yaw 58.821
-+14:
++15:
 	tas_strafe_yaw 128.485
-+27:
++25:
 	tas_strafe_yaw 240.974
-+53:
++55:
 	tas_strafe_yaw 225.071
-+24:
++27:
 	tas_strafe_yaw 280.778
-+40:
++36:
 	tas_strafe_yaw 24.999
-+37:
++35:
 	tas_strafe_yaw 268.25
-+147:
++146:
 	cl_maxfps 10
 +1:
 	cl_maxfps 72
-+73:
++76:
 	echo e1m1 done
