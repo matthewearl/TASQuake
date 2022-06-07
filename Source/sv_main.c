@@ -28,6 +28,9 @@ char		localmodels[MAX_MODELS][5];	// inline model names for precache
 
 //============================================================================
 
+// Delay this many frames before accepting a connection.
+static cvar_t       tas_connect_delay = {"tas_connect_delay", "0"};
+
 /*
 ===============
 SV_Init
@@ -48,6 +51,7 @@ void SV_Init (void)
 	Cvar_Register (&sv_aim);
 	Cvar_Register (&sv_nostep);
 	Cvar_Register (&r_nopvs);
+	Cvar_Register (&tas_connect_delay);
 
 	for (i=0 ; i<MAX_MODELS ; i++)
 		sprintf (localmodels[i], "*%i", i);
@@ -273,6 +277,7 @@ void SV_ConnectClient (int clientnum)
 	SV_SendServerinfo (client);
 }
 
+
 /*
 ===================
 SV_CheckForNewClients
@@ -291,15 +296,27 @@ void SV_CheckForNewClients (void)
 
 	// init a new client structure
 		for (i=0 ; i<svs.maxclients ; i++)
-			if (!svs.clients[i].active)
+			if (!svs.clients[i].active && !svs.clients[i].delayed)
 				break;
 		if (i == svs.maxclients)
 			Sys_Error ("SV_CheckForNewClients: no free clients");
 
-		svs.clients[i].netconnection = ret;
-		SV_ConnectClient (i);
+		svs.clients[i].delayed = true;
+		svs.clients[i].delay = (int)tas_connect_delay.value;
+		svs.clients[i].delayed_conn = ret;
+	}
 
-		net_activeconnections++;
+	for (i=0 ; i<svs.maxclients ; i++) {
+		if (svs.clients[i].delayed) {
+			if (svs.clients[i].delay == 0) {
+				svs.clients[i].netconnection = svs.clients[i].delayed_conn;
+				SV_ConnectClient (i);
+				net_activeconnections++;
+				svs.clients[i].delayed = false;
+			} else {
+				svs.clients[i].delay--;
+			}
+		}
 	}
 }
 
@@ -1029,6 +1046,8 @@ void SV_SpawnServer (char *server)
 	edict_t	*ent;
 	extern	void R_PreMapLoad (char *);
 
+    Sys_Printf("SV_SpawnServer : seed=%u\n", Get_Seed());
+
 #if defined(GLQUAKE) && !defined(LIB)
 	if (nehahra)
 	{
@@ -1164,6 +1183,7 @@ void SV_SpawnServer (char *server)
 	//	sv.time += 0.1;
 	SV_Physics ();
 	//	sv.time += 0.1;
+
 
 // create a baseline for more efficient communications
 	SV_CreateBaseline ();

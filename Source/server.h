@@ -113,6 +113,11 @@ typedef struct client_s
 
 	// joe, from ProQuake: allow clients to connect if they don't have the map
 	qboolean	nomap;
+
+    // connect delay
+    qboolean delayed;
+    int delay;
+	struct qsocket_s *delayed_conn;	// communications handle
 } client_t;
 
 //=============================================================================

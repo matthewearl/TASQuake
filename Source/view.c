@@ -1391,7 +1391,9 @@ void SCR_DrawPlaybackStats (void)
 
 void SCR_Draw_TAS_Hud(void)
 {
-	SCR_Draw_TAS_HUD_Hook();
+	if (sv_player) {
+		SCR_Draw_TAS_HUD_Hook();
+	}
 }
 
 void V_DropPunchAngle (void)

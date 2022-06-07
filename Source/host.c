@@ -652,6 +652,7 @@ Host_Frame
 Runs all active servers
 ==================
 */
+unsigned int Get_Seed(void);
 void _Host_Frame (double time)
 {
 	int		pass1, pass2, pass3;

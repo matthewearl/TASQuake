@@ -43,6 +43,18 @@ void Cmd_TAS_Set_Seed_Onload(void)
 	set_seed = true;
 }
 
+void Cmd_TAS_Set_Seed_Immediate(void)
+{
+	if (Cmd_Argc() == 1)
+	{
+        srand(0);
+	}
+	else
+	{
+		srand(atoi(Cmd_Argv(1)));
+	}
+}
+
 void SV_Physics_Client_Hook()
 {
 	if (cls.demoplayback)
@@ -148,6 +160,7 @@ void TAS_Init()
 	Cmd_AddCommand("tas_print_vel", Cmd_TAS_Print_Vel);
 	Cmd_AddCommand("tas_print_origin", Cmd_TAS_Print_Origin);
 	Cmd_AddCommand("tas_set_seed", Cmd_TAS_Set_Seed_Onload);
+	Cmd_AddCommand("tas_set_seed_immediate", Cmd_TAS_Set_Seed_Immediate);
 	Cmd_AddCommand("tas_afterframes", Cmd_TAS_AfterFrames);
 	Cmd_AddCommand("tas_afterframes_await_load", Cmd_TAS_AfterFrames_Await_Load);
 	Cmd_AddCommand("tas_afterframes_clear", Cmd_TAS_AfterFrames_Clear);

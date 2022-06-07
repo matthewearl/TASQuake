@@ -19,6 +19,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 // cl_parse.c -- parse a message received from the server
 
+#include <stdio.h>
 #include "quakedef.h"
 
 char *svc_strings[] =
@@ -1157,6 +1158,7 @@ void CL_ParseServerMessage (void)
 			// intermission bugfix -- by joe
 			cl.completed_time = cl.mtime[0];
             cl.completed_time_double = cl.mtime[0];
+			printf("%f\n", cl.completed_time_double);
 			vid.recalc_refdef = true;	// go to full screen
 			break;
 

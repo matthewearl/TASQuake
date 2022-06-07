@@ -1715,6 +1715,11 @@ unsigned int Get_RNG_Seed(void)
 	return frame_seed;
 }
 
+unsigned int Get_Seed(void)
+{
+	return next;
+}
+
 int Get_RNG_Count(void)
 {
 	return count;
