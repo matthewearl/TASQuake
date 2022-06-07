@@ -1,9 +1,11 @@
+# Made by truncating id1_er.qtas at first/last block of e1m1.
+# Header was written manually, including SpawnServer seed obtained from running id1_er
 +1:
     tas_connect_delay 1
 	tas_strafe_version 2
 +1:
 	skill 0
-	tas_set_seed_immediate 714184664
+	tas_set_seed_immediate 714184664   # Got from SV_SpawnServer message from id1_er
 	map e1m1
 +5:
 	tas_strafe 1
