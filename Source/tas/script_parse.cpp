@@ -100,6 +100,23 @@ std::string FrameBlock::GetCommand()
 	return oss.str();
 }
 
+
+void FrameBlock::SetCommand(std::string command)
+{
+	std::string c;
+	std::istringstream s(command);
+
+	while (std::getline(s, c, ';')) {
+		if (Is_Convar(c))
+			Parse_Convar(c);
+		else if (Is_Toggle(c))
+			Parse_Toggle(c);
+		else
+			Parse_Command(c);
+	}
+}
+
+
 void FrameBlock::Add_Command(const std::string& line)
 {
 	commands.push_back(line);

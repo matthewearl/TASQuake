@@ -522,11 +522,34 @@ set_block_frames(int *frames)
 }
 
 
+int
+block_has_cvar(int block_num, char *name)
+{
+    return Block_Has_Cvar(block_num, name);
+}
+
+
+float
+block_get_cvar(int block_num, char *name)
+{
+    return Block_Get_Cvar(block_num, name);
+}
+
+
 void
-check_intermission(int *intermission, double *completed_time)
+block_set_cvar(int block_num, char *name, float value)
+{
+    return Block_Set_Cvar(block_num, name, value);
+}
+
+
+extern float exact_completed_time;
+void
+check_intermission(int *intermission, double *completed_time, double *exact_completed_time_arg)
 {
     *intermission = cl.intermission;
     *completed_time = cl.completed_time_double;
+    *exact_completed_time_arg = exact_completed_time;
 }
 
 

@@ -162,6 +162,7 @@ void SV_Impact (edict_t *e1, edict_t *e2)
 		pr_global_struct->self = EDICT_TO_PROG(e2);
 		pr_global_struct->other = EDICT_TO_PROG(e1);
 		PR_ExecuteProgram (e2->v.touch);
+
 	}
 
 	pr_global_struct->self = old_self;

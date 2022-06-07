@@ -1038,6 +1038,7 @@ This is called at the start of each level
 ================
 */
 extern	float	scr_centertime_off;
+extern float exact_completed_time;
 
 void SV_SpawnServer (char *server)
 {
@@ -1178,6 +1179,7 @@ void SV_SpawnServer (char *server)
 	sv.state = ss_active;
 
 	// run two frames to allow everything to settle
+	exact_completed_time = -1.0f;
 	host_frametime += 0.1;
 	SV_Physics ();
 	//	sv.time += 0.1;

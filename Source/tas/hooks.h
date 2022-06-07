@@ -28,6 +28,10 @@ extern "C"
     int Get_Num_Blocks(void);
     void Get_Block_Frames(int *frames);
     void Set_Block_Frames(int *frames);
+	int Block_Has_Cvar(int block_num, char *name);
+	float Block_Get_Cvar(int block_num, char *name);
+	void Block_Set_Cvar(int block_num, char *name, float value);
+
 #ifdef __cplusplus
 }
 #endif

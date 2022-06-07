@@ -21,6 +21,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "quakedef.h"
 
+float exact_completed_time = -1.0f;
+
 /*
 
 entities never clip against themselves, or their owner
@@ -247,6 +249,28 @@ void SV_UnlinkEdict (edict_t *ent)
 	ent->area.prev = ent->area.next = NULL;
 }
 
+static float SV_CalculateExactTriggerTime(edict_t *ent, edict_t *touch)
+{
+	int i;
+	float *vel = ent->v.velocity;
+	float t;
+	float trigger_time = -sv.time;
+
+	// assumes `touch` isn't moving
+	for (i = 0; i < 3; i++) {
+		if (vel[i] > 0) {
+			t = -(ent->v.absmax[i] - touch->v.absmin[i]) / vel[i];
+		} else {
+			t = -(ent->v.absmin[i] - touch->v.absmax[i]) / vel[i];
+		}
+		if (t > trigger_time) {
+			trigger_time = t;
+		}
+	}
+
+	return sv.time + trigger_time;
+}
+
 /*
 ====================
 SV_TouchLinks
@@ -288,6 +312,15 @@ void SV_TouchLinks (edict_t *ent, areanode_t *node)
 		pr_global_struct->other = EDICT_TO_PROG(ent);
 		pr_global_struct->time = sv.time;
 		PR_ExecuteProgram (touch->v.touch);
+
+		if (!strcmp(PR_GetString(touch->v.classname), "trigger_changelevel") &&
+			!strcmp(PR_GetString(ent->v.classname), "player")) {
+			Sys_Printf("change level touched! time = %.5f\n", sv.time);
+			Sys_Printf("nextthink = %.5f\n", touch->v.nextthink);
+			// with cl_maxfps trick the real finish time is 0.1 + 1/72 after the touch time.
+			exact_completed_time = SV_CalculateExactTriggerTime(ent, touch);
+			Sys_Printf("exact trigger time: %.5f\n", exact_completed_time);
+		}
 
 		pr_global_struct->self = old_self;
 		pr_global_struct->other = old_other;

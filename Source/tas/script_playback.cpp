@@ -457,6 +457,28 @@ void Set_Block_Frames(int *frames)
     }
 }
 
+
+int Block_Has_Cvar(int block_num, char *name)
+{
+    auto& block = playback.current_script.blocks[block_num];
+    return block.convars.count(name) != 0;
+}
+
+
+float Block_Get_Cvar(int block_num, char *name)
+{
+    auto& block = playback.current_script.blocks[block_num];
+    return block.convars[name];
+}
+
+
+void Block_Set_Cvar(int block_num, char *name, float value)
+{
+    auto& block = playback.current_script.blocks[block_num];
+    block.convars[name] = value;
+}
+
+
 bool TAS_Script_Load(const char* name)
 {
 	Clear_Bookmarks();
