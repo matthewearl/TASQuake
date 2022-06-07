@@ -53,8 +53,8 @@ CFLAGS += -funsigned-char \
 	-fno-strength-reduce	-fexpensive-optimizations \
 	-I../dependencies -I/usr/include
 
-#CFLAGS += -O6
-CFLAGS += -O0 -ggdb
+CFLAGS += -O6
+#CFLAGS += -O0 -ggdb
 
 LDFLAGS += -lm -ldl -lstdc++
 

@@ -1158,7 +1158,6 @@ void CL_ParseServerMessage (void)
 			// intermission bugfix -- by joe
 			cl.completed_time = cl.mtime[0];
             cl.completed_time_double = cl.mtime[0];
-			printf("%f\n", cl.completed_time_double);
 			vid.recalc_refdef = true;	// go to full screen
 			break;
 
