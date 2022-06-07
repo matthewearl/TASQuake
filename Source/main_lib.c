@@ -546,10 +546,10 @@ main(int argc, char **argv)
     start_host(argc, argv);
 
     for (i = 0; i < 100; i++) {
-        add_command("tas_script_load test_e1m1\n");
+        add_command("tas_script_load test_e1m1_only\n");
         do_frame();
         add_command("tas_script_play\n");
-        for (j = 0; j < 1550; j++) {
+        for (j = 0; j < 1260; j++) {
             do_frame();
         }
         add_command("tas_script_stop\n");
