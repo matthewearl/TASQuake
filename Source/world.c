@@ -315,11 +315,12 @@ void SV_TouchLinks (edict_t *ent, areanode_t *node)
 
 		if (!strcmp(PR_GetString(touch->v.classname), "trigger_changelevel") &&
 			!strcmp(PR_GetString(ent->v.classname), "player")) {
-			Sys_Printf("change level touched! time = %.5f\n", sv.time);
-			Sys_Printf("nextthink = %.5f\n", touch->v.nextthink);
+			float trigger_time;
 			// with cl_maxfps trick the real finish time is 0.1 + 1/72 after the touch time.
-			exact_completed_time = SV_CalculateExactTriggerTime(ent, touch);
-			Sys_Printf("exact trigger time: %.5f\n", exact_completed_time);
+			trigger_time = SV_CalculateExactTriggerTime(ent, touch);
+			if (exact_completed_time < 0.0f) {
+				exact_completed_time = trigger_time;
+			}
 		}
 
 		pr_global_struct->self = old_self;
