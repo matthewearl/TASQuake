@@ -115,29 +115,29 @@
 +16:
 	tas_strafe_yaw 3.334
 +26:
-	tas_strafe_yaw -0.33410012
+	tas_strafe_yaw -0.35070432
 +5:
 	-tas_lgagst
 +40:
-	tas_strafe_yaw -1.56085384
+	tas_strafe_yaw -1.68893774
 	+tas_lgagst
 +14:
-	tas_strafe_yaw 86.43427203
+	tas_strafe_yaw 87.31917529
 +35:
-	tas_strafe_yaw 62.00280824
+	tas_strafe_yaw 55.09875781
 +15:
-	tas_strafe_yaw 131.38936426
+	tas_strafe_yaw 131.47827346
 +25:
-	tas_strafe_yaw 245.5842168
+	tas_strafe_yaw 238.94970351
 +51:
-	tas_strafe_yaw 220.31975751
+	tas_strafe_yaw 223.58544572
 +29:
-	tas_strafe_yaw 279.28754539
+	tas_strafe_yaw 281.72583386
 +35:
-	tas_strafe_yaw 22.88742
+	tas_strafe_yaw 20.83253343
 +37:
-	tas_strafe_yaw 271.70859716
-+146:
+	tas_strafe_yaw 270.14002073
++142:
 	cl_maxfps 10
 +1:
 	cl_maxfps 72
