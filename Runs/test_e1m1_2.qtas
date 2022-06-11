@@ -137,7 +137,9 @@
 	tas_strafe_yaw 20.83253343
 +37:
 	tas_strafe_yaw 270.14002073
-+142:
++140:
+	cl_maxfps 51
++1:
 	cl_maxfps 10
 +1:
 	cl_maxfps 72
