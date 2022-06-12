@@ -320,6 +320,7 @@ void SV_TouchLinks (edict_t *ent, areanode_t *node)
 			trigger_time = SV_CalculateExactTriggerTime(ent, touch);
 			if (exact_completed_time < 0.0f) {
 				exact_completed_time = trigger_time;
+				Sys_Printf("exact completed time: %.6f\n", exact_completed_time);
 			}
 		}
 
