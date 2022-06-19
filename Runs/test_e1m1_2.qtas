@@ -113,35 +113,35 @@
 +2:
 	tas_strafe_yaw 204.521
 +16:
-	tas_strafe_yaw -0.629867
+	tas_strafe_yaw -3.45152
 +26:
-	tas_strafe_yaw 7.14914
+	tas_strafe_yaw -0.336051
 +5:
 	-tas_lgagst
 +40:
-	tas_strafe_yaw 1.95976
+	tas_strafe_yaw -0.504574
 	+tas_lgagst
 +14:
-	tas_strafe_yaw 83.3134
-+38:
-	tas_strafe_yaw 61.5388
-+13:
-	tas_strafe_yaw 139.01
-+26:
-	tas_strafe_yaw 246.594
-+43:
-	tas_strafe_yaw 214.755
-+26:
-	tas_strafe_yaw 274.459
+	tas_strafe_yaw 82.4888
 +41:
-	tas_strafe_yaw 5.39277
+	tas_strafe_yaw 63.7553
++11:
+	tas_strafe_yaw 146.64
++27:
+	tas_strafe_yaw 248.148
++41:
+	tas_strafe_yaw 209.322
++25:
+	tas_strafe_yaw 279.218
 +43:
-	tas_strafe_yaw 266.963
-+130:
-    cl_maxfps 25
+	tas_strafe_yaw 9.48825
++37:
+	tas_strafe_yaw 269.027
++135:
+	cl_maxfps 69
 +1:
 	cl_maxfps 10
 +1:
 	cl_maxfps 72
-+70:
++93:
 	echo e1m1 done
