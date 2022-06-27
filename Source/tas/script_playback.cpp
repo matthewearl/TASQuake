@@ -15,6 +15,7 @@
 #include "bookmark.hpp"
 #include "camera.hpp"
 
+int g_current_block = 0;
 static PlaybackInfo playback;
 const int LOWEST_FRAME = 0;
 const int LOWEST_BLOCK = 0;
@@ -378,6 +379,7 @@ void Script_Playback_Host_Frame_Hook()
 	}
 
 	int current_block = playback.GetBlockNumber();
+    g_current_block = current_block;
 
 	while (current_block < playback.current_script.blocks.size()
 	       && playback.current_script.blocks[current_block].frame <= playback.current_frame)

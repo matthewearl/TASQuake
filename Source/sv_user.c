@@ -346,6 +346,8 @@ the move fields specify an intended velocity in pix/sec
 the angle fields specify an exact angular motion in degrees
 ===================
 */
+extern cvar_t tas_strafe_yaw;
+extern int g_current_block;
 void SV_ClientThink (void)
 {
 	vec3_t	v_angle;
@@ -353,6 +355,25 @@ void SV_ClientThink (void)
 	if (sv_player->v.movetype == MOVETYPE_NONE || (tas_gamestate != unpaused && !simulating))
 		return;
 	
+#if 1
+    {
+        // info used for blender annotations
+        Sys_Printf("@@@ {\"current_block\": %d, "
+                   "\"time\": %f, \"tas_strafe_yaw\": %f, "
+                   "\"origin\": [%f, %f, %f]} "
+                   "\"velocity\": [%f, %f, %f]}\n",
+                   g_current_block,
+                   sv.time,
+                   tas_strafe_yaw.value,
+                   sv_player->v.origin[0],
+                   sv_player->v.origin[1],
+                   sv_player->v.origin[2],
+                   sv_player->v.velocity[0],
+                   sv_player->v.velocity[1],
+                   sv_player->v.velocity[2]);
+    }
+#endif
+
 	onground = (int)sv_player->v.flags & FL_ONGROUND;
 
 	origin = sv_player->v.origin;
