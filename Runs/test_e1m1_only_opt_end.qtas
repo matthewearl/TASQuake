@@ -1,0 +1,135 @@
+# Made by truncating id1_er.qtas at first/last block of e1m1.
+# Header was written manually, including SpawnServer seed obtained from running id1_er
++1:
+    tas_connect_delay 1
+	tas_strafe_version 2
++1:
+	skill 0
+	tas_set_seed_immediate 714184664   # Got from SV_SpawnServer message from id1_er
+	map e1m1
++5:
+	tas_strafe 1
+	+tas_lgagst
+	tas_strafe_yaw 95.691
+	-tas_lgagst
++13:
+	+tas_jump
++6:
+	-tas_jump
+	+tas_lgagst
++109:
+	tas_strafe_yaw 180.341
++11:
+	cl_maxfps 10
++1:
+	cl_maxfps 72
++67:
+	tas_strafe_type 3
+	tas_strafe_yaw 259.091
+	tas_view_yaw 45
+	-tas_lgagst
++111:
+	tas_strafe_type 1
+	tas_strafe_yaw 41.32
+	tas_view_yaw 999
++1:
+	tas_strafe_yaw 76.597
++27:
+	+tas_lgagst
++6:
+	tas_strafe_yaw 80.217
++1:
+	-attack
++49:
+	tas_strafe_yaw 89.214
++50:
+	+attack
++2:
+	-attack
++48:
+	tas_view_pitch 25.6
+	tas_view_yaw 0.0384521
++1:
+	tas_strafe_yaw 121.745
++1:
+	tas_strafe_yaw 121.234
+	tas_view_pitch 25.7
+	tas_view_yaw 0.0549316
++26:
+	tas_strafe_yaw 180.692
++8:
+	+attack
++1:
+	tas_strafe_type 1
+	tas_strafe_yaw 77.833
+	tas_view_pitch 999
+	tas_view_yaw 999
++3:
+	tas_strafe_type 2
+	tas_strafe_yaw 89.951
++1:
+	-attack
++27:
+	tas_strafe_type 1
+	tas_strafe_yaw 86.979
++4:
+	tas_strafe_yaw 56.135
++4:
+	tas_strafe_yaw 90.132
+	-tas_lgagst
++7:
+	+tas_lgagst
++3:
+	tas_strafe_type 2
+	tas_strafe_yaw 355.836
++12:
+	tas_strafe_type 1
++42:
+	tas_strafe_yaw 8.317
+	+attack
++1:
+	-attack
++49:
+	tas_strafe_yaw 30.992
++13:
+	tas_strafe_type 2
+	tas_strafe_yaw 268.248
++10:
+	tas_strafe_type 1
++14:
+	tas_strafe_type 2
++36:
+	tas_strafe_type 1
++2:
+	tas_strafe_yaw 204.521
++16:
+	tas_strafe_yaw -3.45152
++26:
+	tas_strafe_yaw -0.336051
++5:
+	-tas_lgagst
++40:
+	tas_strafe_yaw -0.504574
+	+tas_lgagst
++14:
+	tas_strafe_yaw 82.4888
++41:
+	tas_strafe_yaw 63.7553
++11:
+	tas_strafe_yaw 146.64
++27:
+	tas_strafe_yaw 248.148
++41:
+	tas_strafe_yaw 209.322
++25:
+	tas_strafe_yaw 279.218
++43:
+	tas_strafe_yaw 9.48825
++37:
+	tas_strafe_yaw 269.027
++136:
+	cl_maxfps 10
++1:
+	cl_maxfps 72
++93:
+	echo e1m1 done
