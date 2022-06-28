@@ -360,7 +360,7 @@ void SV_ClientThink (void)
         // info used for blender annotations
         Sys_Printf("@@@ {\"current_block\": %d, "
                    "\"time\": %f, \"tas_strafe_yaw\": %f, "
-                   "\"origin\": [%f, %f, %f]} "
+                   "\"origin\": [%f, %f, %f], "
                    "\"velocity\": [%f, %f, %f]}\n",
                    g_current_block,
                    sv.time,
