@@ -268,7 +268,7 @@ static float SV_CalculateExactTriggerTime(edict_t *ent, edict_t *touch)
 		}
 	}
 
-	return sv.time + trigger_time;
+	return sv.time + host_frametime + trigger_time;
 }
 
 /*
@@ -316,7 +316,7 @@ void SV_TouchLinks (edict_t *ent, areanode_t *node)
 		if (!strcmp(PR_GetString(touch->v.classname), "trigger_changelevel") &&
 			!strcmp(PR_GetString(ent->v.classname), "player")) {
 			float trigger_time;
-			// with cl_maxfps trick the real finish time is 0.1 + 1/72 after the touch time.
+			// with cl_maxfps trick the real finish time is 0.1 seconds before the touch time.
 			trigger_time = SV_CalculateExactTriggerTime(ent, touch);
 			if (exact_completed_time < 0.0f) {
 				exact_completed_time = trigger_time;
