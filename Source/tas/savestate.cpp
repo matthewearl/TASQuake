@@ -540,11 +540,11 @@ static void WriteParticleAddress(std::ofstream& out, r_particle_t* p)
 {
 	if (p)
 	{
-		Write(out, p - r_particles);
+		Write(out, (int)(p - r_particles));
 	}
 	else
 	{
-		Write(out, -1);
+		Write(out, (int)-1);
 	}
 }
 
@@ -597,7 +597,6 @@ static void Read_Particles(std::ifstream& in)
 	Read(in, ss_num_particles);
 	for (int i = 0; i < ss_num_particles; ++i)
 	{
-		
 		Read(in, saved_particles[i]);
 		saved_particles[i].next = ReadParticleAddress(in);
 	}
