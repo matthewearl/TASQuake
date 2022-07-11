@@ -660,13 +660,13 @@ void _Host_Frame (double time)
 
 	if (setjmp(host_abortserver))
 		return;		// something bad happened, or the server disconnected
-	
-	Frame_RNG_Seed();
-	_Host_Frame_Hook();
 
 	// keep the random time dependent
 	if(tas_gamestate == unpaused)
 		rand ();
+	
+	Frame_RNG_Seed();
+	_Host_Frame_Hook();
 
 	// decide the simulation time
 	if (!Host_FilterTime(time))
