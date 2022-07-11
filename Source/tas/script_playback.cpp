@@ -670,6 +670,20 @@ void Cmd_TAS_Script_Advance_Block(void)
 	Generic_Advance(frame);
 }
 
+void Cmd_TAS_Script_Advance_End(void)
+{
+	if (playback.script_running)
+	{
+		Con_Printf("Can't advance while script still running.\n");
+		return;
+	}
+
+    auto num_blocks = playback.current_script.blocks.size();
+	auto& block = playback.current_script.blocks[num_blocks - 1];
+	int frame = block.frame;
+	Generic_Advance(frame);
+}
+
 void Cmd_TAS_Edit_Prune(void)
 {
 	if (Cmd_Argc() == 3)

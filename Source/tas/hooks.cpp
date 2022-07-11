@@ -121,6 +121,7 @@ void TAS_Init()
 	Cmd_AddCommand("tas_script_skip_block", Cmd_TAS_Script_Skip_Block);
 	Cmd_AddCommand("tas_script_advance", Cmd_TAS_Script_Advance);
 	Cmd_AddCommand("tas_script_advance_block", Cmd_TAS_Script_Advance_Block);
+	Cmd_AddCommand("tas_script_advance_end", Cmd_TAS_Script_Advance_End);
 
 	Cmd_AddCommand("tas_edit_prune", Cmd_TAS_Edit_Prune);
 	Cmd_AddCommand("tas_edit_save", Cmd_TAS_Edit_Save);

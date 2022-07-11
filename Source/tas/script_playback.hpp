@@ -54,6 +54,8 @@ void Cmd_TAS_Script_Advance(void);
 // desc: Usage: tas_script_advance <frames>. Advances script by number of blocks given as argument. Use negative values \
 to go backwards.
 void Cmd_TAS_Script_Advance_Block(void);
+// Advance to the last block in the script
+void Cmd_TAS_Script_Advance_End(void);
 
 extern cvar_t tas_edit_backups;
 extern cvar_t tas_edit_snap_threshold;
