@@ -25,6 +25,10 @@ cvar_t tas_savestate_auto = {"tas_savestate_auto", "0"};
 cvar_t tas_savestate_enabled = {"tas_savestate_enabled", "1"};
 const int frequency = 100;
 
+#ifdef LIB
+extern unsigned int lib_instance_id;
+#endif
+
 void SS(const char* savename);
 
 static bool Can_Savestate()
@@ -52,7 +56,11 @@ static void Create_Savestate(int frame, bool force)
 			return;
 	}
 
+#ifdef LIB
+	sprintf_s(BUFFER, ARRAYSIZE(BUFFER), "savestates/ss_%u_%d", lib_instance_id, save_number);
+#else
 	sprintf_s(BUFFER, ARRAYSIZE(BUFFER), "savestates/ss_%d", save_number);
+#endif
 	SS(BUFFER);
 	savestateMap[frame] = Savestate(frame, save_number);
 	++save_number;
@@ -87,7 +95,11 @@ int Savestate_Load_State(int frame)
 	}
 
 	static char BUFFER[80];
+#ifdef LIB
+	sprintf_s(BUFFER, ARRAYSIZE(BUFFER), "tas_ls savestates/ss_%u_%d", lib_instance_id, number);
+#else
 	sprintf_s(BUFFER, ARRAYSIZE(BUFFER), "tas_ls savestates/ss_%d", number);
+#endif
 	tas_gamestate = loading;
 	AddAfterframes(1, "disconnect", NoFilter);
 	AddAfterframes(2, BUFFER, NoFilter);

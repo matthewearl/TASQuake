@@ -2,6 +2,9 @@
 #include "tas/hooks.h"
 
 
+unsigned int lib_instance_id = 0;
+
+
 // Stub implementations
 
 //qpic_t *pic_ovr, *pic_ins; //johnfitz -- new cursor handling
@@ -387,9 +390,11 @@ static quakeparms_t	parms;
 
 
 void
-start_host(int argc, char *argv[])
+start_host(unsigned int instance_id, int argc, char *argv[])
 {
 	int t;
+
+	lib_instance_id = instance_id;
 
 	parms.basedir = ".";
 	parms.argc = argc;
